@@ -1,0 +1,43 @@
+body {
+    font-family: "Open Sans",sans-serif;
+    font-weight: normal;
+    font-style: normal;
+    font-size: 16px;
+}
+div{
+    display:block;
+}
+.login-form .form-input {
+    position: relative;
+    margin: 20px 0;
+}
+.login-form .form-input label {
+    font-size: 18px;
+    font-weight: 600;
+    color: #fff;
+}
+.login-form .form-input input {
+    outline: none;
+    height: 40px;
+    padding: 10px;
+    box-sizing: border-box;
+    width: 100%;
+    border: 1px solid rgba(0,0,0,0.5);
+    background: transparent;
+    font-size: 18px;
+    border: none;
+    color: #fff;
+    border-bottom: 1px solid #fff;
+}
+.login-form .form-input input[type="submit"] {
+    background: #F067FF;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    text-transform: capitalize;
+    line-height: 1;
+    font-size: 18px;
+    font-weight: 700;
+    border-radius: 20px;
+    transition: .4s;
+}

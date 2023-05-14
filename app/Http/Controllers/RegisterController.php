@@ -5,7 +5,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
-use function PHPUnit\Framework\isEmpty;
 
 class RegisterController extends Controller
 {
@@ -19,26 +18,25 @@ class RegisterController extends Controller
         // $email = "Admin@gmail.com";
         $pass = $request->input("pass");
         $pass1 = $request->input("pass_new");
-        if(!isset($username)){
-            echo "username tidak boleh kosong <br>";
-            // return redirect('/register',302,["error"=>'Username tidak boleh kosong']);
-        }else if(!isset($email)){
-            echo "email tidak boleh kosong <br>";
-            // return redirect('/register',302,["error"=>'Email tidak boleh kosong']);
-        }else if(!isset($nama)){
-            echo "nama tidak boleh kosong <br>";
-            // return redirect('/register',302,["error"=>'nama tidak boleh kosong']);
-        }else if(!isset($pass)){
+        if(empty($username)){
+            // echo "username tidak boleh kosong <br>";
+            return response()->header('error','Username Tidak boleh kosong');
+        }else if(empty($email)){
+            // echo "email tidak boleh kosong <br>";
+            return response()->header('error','Email Tidak boleh kosong');
+        }else if(empty($nama)){
+            // echo "nama tidak boleh kosong <br>";
+            return response()->header('error','Nama Lengkap Tidak boleh kosong');
+        }else if(empty($pass)){
             echo "password tidak boleh kosong <br>";
-            // return redirect('/register',302,["error"=>'Password tidak boleh kosong']);
-        }else if(!isset($pass1)){
+            return response()->header('error','Password Tidak boleh kosong');
+        }else if(empty($pass1)){
             echo "password tidak boleh kosong <br>";
-            // return redirect('/register',302,["error"=>'Password tidak boleh kosong']);
+            return response()->header('error','Ulangi Password Tidak boleh kosong');
         }else if (User::select("username")->where('username','LIKE','%'.$username.'%')->limit(1)->exists()){
             // if(DB::table("users")->select("username")->where('email','=',$username)->limit(1)->exists()){
-            echo "username sudah digunakan <br>";
-            // throw
-            // return redirect('/register',302,["error"=>'Username sudah digunakan']);
+            // echo "username sudah digunakan <br>";
+            return response()->header('error','Username sudah digunakan');
         }else{
             if($pass === $pass1){
                 // DB::table("users")->select("username")->where('email','=',$email)->limit(1)->get();
@@ -48,18 +46,17 @@ class RegisterController extends Controller
                 $user->password = Hash::make($pass);
                 if($user->save()){
                     echo "akun berhasil dibuat <br>";
-                    return redirect('/login',302,["success"=>'Akun berhasil dibuat']);
+                    return redirect('/login')->header('Success','Akun Berhasil Dibuat Silahkan Login');
                 }else{
                     echo "akun gagal dibuat <br>";
-                    return redirect('/register',302,["error"=>'Akun gagal dibuat']);
+                    return response('/register')->header('error','Akun Gagal Dibuat');
                 }
             }else{
                 echo "Password harus sama <br>";
-                // return redirect('/register',302,["error"=>'Password Harus Sama']);
+                return response()->header('error','Password Harus Sama');
             }
         }
         // return view('welcome');
     }
 }
 ?>
-123456789

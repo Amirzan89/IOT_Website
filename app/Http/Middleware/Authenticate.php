@@ -20,9 +20,9 @@ class Authenticate
     }
     public function handle(Request $request, Closure $next){
         // $previousUrl = $request->header('referer');
-        $link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]";
+        // $link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]";
         $pathh = $request->path();
-        echo "dahlahh  $pathh <br>";
+        // echo "dahlahh  $pathh <br>";
         $previousUrl = url()->previous();
         $path = parse_url($previousUrl, PHP_URL_PATH);
         $path = ltrim($path, '/');
@@ -83,19 +83,27 @@ class Authenticate
                 return $this->logout($request, $next);
             }
         }else{
-            echo "cookie hilangg<br>";
-            // var_dump($request->hasCookie('id'));
-            // var_dump($request->hasCookie('key'));
+            // echo "cookie hilangg<br>";
             // $previousUrl = $request->header('referer');
             if($request->hasCookie("id") || $request->hasCookie("key")){
-                $this->response->withCookie(cookie()->forget('id'));
-                $this->response->withCookie(cookie()->forget('key'));
-                // echo "kosongg <br>";
                 $pathh = $request->path();
                 echo "patthh $pathh  <br>";
-                $page = ['dashboard','digital','pengaturan','analog'];
+                $page = ['dashboard','digital','penzgaturan','analog'];
                 if(in_array($request->path(),$page)){
-                    return redirect('/login');
+                    return redirect('/login') -> withCookies([Cookie::forget('id'),Cookie::forget('key')]);
+                }
+                if(($request->path() === 'login' || 'register') && $request->isMethod('get')){
+                    // echo "teraeravva <br>";
+                    if($request->path() === 'login'){
+                        echo "teraeravva erorr<br>";
+                        if($request->hasHeader('error')){
+                            echo "teraeravva erorr313<br>";
+                            $errorr = $request->header('error');
+                            echo "errrorr $errorr <br>";
+                            echo "<script> alert($errorr) </script>";
+                        }
+                    } 
+                    return redirect($request->path()) -> withCookies([Cookie::forget('id'),Cookie::forget('key')]);
                 }
                 $previousUrl = url()->previous();
                 echo "sebelumnya $previousUrl<br>";
@@ -106,6 +114,18 @@ class Authenticate
                 if($path == 'login'){
                     if($request->path === '/login' && $request->isMethod('get')){
                         // return back()->with('error', 'You cannot access this page.');
+                    }
+                }
+            }else{
+                if(($request->path() === 'login' || 'register')&& $request->isMethod('get')){
+                    if($request->has('error')){
+                        $error = $request->input('error');
+                        echo "eroorr $error <br>";
+                    }
+                    // echo "<script>alert($error)</script>";
+                    if($request->has('Success')){
+                        $success = $request->input('Success');
+                        echo "<script>alert($success)</script>";
                     }
                 }
             }

@@ -1,22 +1,17 @@
 <?php
-
 namespace App\Models;
-
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
-
-class User extends Authenticatable
+use Illuminate\Database\Eloquent\Model;
+class RefreshToken extends Model
 {
-    use HasApiTokens, HasFactory, Notifiable;
-    protected $table = "users";
+    use HasFactory;
+    protected $table = "password_reset";
     protected $primaryKey = "id";
     public $incrementing = true;
+    protected $keyType = 'integer';
     public $timestamps = true;
     protected $fillable = [
-        'username','email', 'password','nama', 'google_id','email_verified'
+        'email','token'
     ];
     /**
      * The attributes that are mass assignable.
@@ -44,6 +39,6 @@ class User extends Authenticatable
      * @var array<string, string>
      */
     protected $casts = [
-        'email_verified_at' => 'datetime',
+        // 'email_verified_at' => 'datetime',
     ];
 }

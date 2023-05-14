@@ -10,7 +10,7 @@
     <title>dashboard</title>
 </head>
 <body>
-    <b1>ncadcnkanvknknakvnknvknakvnanknkbnblbmlwnwnvkwekbebfubfuwfwhfw</b1>
+    <!-- <b1>ncadcnkanvknknakvnknvknakvnanknkbnblbmlwnwnvkwekbebfubfuwfwhfw</b1> -->
     <a href="<?php echo $link."/register"; ?>">Halaman Register</a><br>
     <a href="<?php echo $link."/login"; ?>">Halaman Login</a><br>
     <a href="<?php echo $link."/user/config"; ?>">Halaman Pengaturan</a><br>
