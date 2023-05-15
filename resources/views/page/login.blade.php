@@ -18,7 +18,7 @@
     <div class="bg-img">
         <div class="content">
             <header>Login Form</header>
-            <form action="<?php echo $link."/login-form"; ?>" method="post">
+            <form action="<?php echo $link."/users/login"; ?>" method="post">
                 <div class="field">
                     <span class="fa fa-user fa-2x"></span>
                     <input type="text" placeholder="Email Or Phone" required name="email">

@@ -2,10 +2,12 @@
 namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-class RefreshToken extends Model
+use Tymon\JWTAuth\Contracts\JWTSubject;
+use Illuminate\Notification\Notifiable;
+class RefreshToken extends Model implements JWTSubject
 {
     use HasFactory;
-    protected $table = "password_reset";
+    protected $table = "refresh_token";
     protected $primaryKey = "id";
     public $incrementing = true;
     protected $keyType = 'integer';
@@ -29,6 +31,12 @@ class RefreshToken extends Model
      *
      * @var array<int, string>
      */
+    public function getJWTIdentifier(){
+        return $this->getKey();
+    }
+    public function getJWTCustomClaims(){
+        return [];
+    }
     protected $hidden = [
         // 'password',
     ];

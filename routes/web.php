@@ -9,7 +9,7 @@ use app\Http\Controllers\Register;
 use app\Http\Controllers\JwtController;
 /*
 |--------------------------------------------------------------------------
-| Web Routes2
+| Web Routes
 |--------------------------------------------------------------------------
 |
 | Here is where you can register web routes for your application. These
@@ -17,6 +17,18 @@ use app\Http\Controllers\JwtController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::group(['prefix'=>'/testing'],function(){
+    Route::group(['prefix'=>'/token'],function(){
+        Route::get('/','JWTController@get');
+        Route::post('/','JWTController@save');
+        Route::post('/create','JWTController@create');
+        Route::group(['middleware'=>'auth'],function(){
+            Route::post('/',function(){
+                return view('page.welcome');
+            });
+        });
+    });
+});
 Route::get('/error','ErrorController@handling');
 Route::get('authorized/google', 'LoginController@redirectToGoogle');
 Route::get('authorized/google/callback', 'LoginController@handleGoogleCallback');
@@ -59,5 +71,15 @@ Route::group(['middleware'=>'auth'],function(){
         });
         Route::post("/weather","TestController@weather");
     });
+});
+
+//mobile 
+Route::group(['prefix'=>'/mobile'],function(){
+    Route::get('/data');
+});
+
+//device
+Route::group(['prefix'=>'/device'],function(){
+    Route::get('/');
 });
 ?>

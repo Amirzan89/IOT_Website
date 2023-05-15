@@ -18,7 +18,7 @@
     <title>Register</title>
 </head>
 <body>
-    <form action="<?php echo $link."/register-form"; ?>" method="post">
+    <form action="<?php echo $link."/users/register"; ?>" method="post">
         @csrf
         Masukkan username<input type="text" name="username"><br>
         Masukkan email<input type="text" name="email"><br>
