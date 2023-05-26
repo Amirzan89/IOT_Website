@@ -44,7 +44,7 @@ class JwtController extends Controller
     public function create(Request $request, RefreshToken $refreshToken){
         $email = $request->input('email');
         if(empty($email) || is_null($email)){
-            return response()->json('email empty',404);
+            return response()->json('email empty',401);
         }else{
             if(User::select("email")->where('email','=',$email)->limit(1)->exists()){
                 $dataDb = User::select()->where('email','=',$email)->limit(1)->get();
